@@ -1,0 +1,36 @@
+# Dynamic HTTP/HTTPS configuration
+#############################################################################################
+# The http `router` requires a `rule` to be set or you will get an error
+# when starting Traefik.  When setting the rule, do NOT use single quotes (')
+# but instead use the backtick (`) which is located to the left of the 1 on your 
+# keyboard.
+# "To set the value of a rule, use backticks ` or escaped double-quotes \".
+# Single quotes ' are not accepted since the values are Golang's String Literals."
+# https://doc.traefik.io/traefik/routing/routers/#rule
+#############################################################################################
+http:
+  routers:
+    httprouter:
+      entryPoints:
+      - web
+      rule: Host(`isedemolab.com`)
+      service: web-1
+#############################################################################################
+# healthChecks remove unhealthy servers from the load balancing rotation. Traefik will 
+# consider your servers healthy as long as they return status codes between 2XX and 3XX to 
+# the health check requests.  Optional settings can be found at:
+# https://doc.traefik.io/traefik/routing/services/
+# 
+# The address of the servers in the http context must use the `url`
+# field name
+#############################################################################################
+
+  services:
+    web-1:
+      loadBalancer:
+        healthCheck:
+          path: /
+          port: 443
+        servers:
+          - url: "https://www.isedemolab.com"
+          - url: "https://www2.isedemolab.com"

@@ -1,0 +1,91 @@
+# Static configuration
+##############################################################################
+# An `entryPoint` tells traefik to listen on specific ports.
+# EntryPoints with an address formatted as :80 will use the system IP address.
+# To use a specific alternate IP address inster the IP address before the port
+# as shown below.  UDP ports _MUST_ be labeled as such, otherwise the 
+# default (tcp) will be used. For options and variables, visit
+# https://doc.traefik.io/traefik/routing/entrypoints/
+##############################################################################
+entryPoints:
+  unsecure:
+    address: :80
+  secure:
+    address: :443
+  metrics:
+    address: :8082
+  auth1:
+    address: "192.168.102.105:1812/udp"
+  auth2:
+    address: "192.168.102.106:1812/udp"
+  auth3:
+    address: "192.168.102.107:1812/udp"
+  acct1:
+    address: "192.168.102.105:1813/udp"
+  acct2:
+    address: "192.168.102.106:1813/udp"
+  acct3:
+    address: "192.168.102.107:1813/udp"
+  tacacs:
+    address: "192.168.102.105:49"
+  web:
+    address: "192.168.102.106:8443"
+
+##############################################################################
+# The `providers` section lists the services that exist on your infrastructure
+# In this example, I use a File Provider that will enable a dynamic 
+# configuration to be used.  The `watch: true` flag will monitor the file
+# (or folder) for changes and immediately implement them
+# For options and variables, visit
+# https://doc.traefik.io/traefik/routing/overview/
+##############################################################################
+providers:
+  file:
+    # filename: "config/radius.yaml"
+    #######################################################################
+    # To use a single file instead of a directory, un-comment the line
+    # above and add the path to your dynamic configuration files 
+    # (comment out or delete the `directory` entry below).
+    #######################################################################
+    directory: config
+    watch: true
+
+##############################################################################
+# To enable the Traefik dashboard add this section
+# For options and variables, visit
+# https://doc.traefik.io/traefik/operations/dashboard/
+##############################################################################
+api:
+  dashboard: true
+  insecure: true
+
+##############################################################################
+# To output metrics to Prometheus add the following section
+# For options and variables, visit
+# https://doc.traefik.io/traefik/observability/metrics/prometheus/
+##############################################################################
+metrics:
+  prometheus:
+    addEntryPointsLabels: true
+    addRoutersLabels: true
+    addServicesLabels: true
+    headerLabels:
+      label: headerKey
+    entryPoint: metrics
+
+##############################################################################
+# To configure access logging add this section
+# This will allow you to use LogStash or ElasticSearch to parse the logs
+# For options and variables, visit
+# https://doc.traefik.io/traefik/observability/access-logs/
+##############################################################################
+accessLog:
+  filePath: "/logs/access.log"
+  bufferingSize: 100
+  format: json
+  filters:
+    statusCodes:
+      - "200"
+      - "300-302"
+    retryAttempts: true
+    minDuration: "10ms"
