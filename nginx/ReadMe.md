@@ -1,6 +1,7 @@
 # Cloud_Based_Load_Balancers/nginx
 
 The application used to install NGINX Plus for the topology used in the bebinar is **NGINX Plus with NGINX App Protect - Developer** as shown below
+
 ![Azure_NGINX](https://github.com/ISEDemoLab/Cloud_Based_Load_Balancers/blob/main/images/azure_nginx.png)
 
 During the provisioning of the NGINX Server, I chose the **Image** Ubuntu Server 22.04 LTS - x64 Gen2, just due to my familiarity with the platform.
