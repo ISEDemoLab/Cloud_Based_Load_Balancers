@@ -1,0 +1,25 @@
+radius-server dead-criteria time 5 tries 3  
+radius-server deadtime 3            
+!  
+radius server PSN01
+address ipv4 192.168.100.4 auth-port 1812 acct-port 1813
+!
+radius server PSN02
+address ipv4 10.1.100.25 auth-port 1812 acct-port 1813
+!
+aaa group server radius ISE-Gr01
+server name PSN02
+server name PSN01
+load-balance method least-outstanding
+!
+aaa session-id common
+aaa authentication dot1x default group ISE-Gr01
+aaa authorization network default group ISE-Gr01
+aaa accounting identity default start-stop group ISE-Gr01
+aaa accounting network default start-stop group ISE-Gr01
+aaa accounting update newinfo periodic 2880
+!
+aaa server radius dynamic-author
+client 192.168.100.4 server-key ISEisC00L
+client 10.1.100.25 server-key ISEisC00L
+
