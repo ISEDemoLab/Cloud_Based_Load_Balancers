@@ -11,7 +11,7 @@ The folders in this repository are listed in this table with their functions:
 |Folder|Function|
 |---|---|
 |ansible|Provision an Always Free ubuntu instance in OCI to install Traefik proxy|
-|catalyst|Configuration for load balancing on Catalyst Switches|
+|catalyst|Configuration for load balancing on Cisco Catalyst Switches|
 |nginx|Configuration file for NGINX Plus|
 |prometheus|Configuration files for Prometheus installation on Traefik proxy|
 |test|Test scripts to send 100 PAP authentications to Load Balancer vips|
