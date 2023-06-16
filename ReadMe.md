@@ -10,7 +10,7 @@ Though not all of the scripts in this repository were shown, this is the collect
 The folders in this repository are listed in this table with their functions:
 |Folder|Function|
 |---|---|
-|ansible|Provision an Always Free ubuntu instance in OCI to install Traefik proxy|
+|ansible|Provision an Always Free ubuntu instance in OCI to install Traefik proxy `OPEN SOURCE`|
 |catalyst|Configuration for load balancing on Cisco Catalyst Switches|
 |nginx|Configuration file for NGINX Plus|
 |prometheus|Configuration files for Prometheus installation on Traefik proxy `OPEN SOURCE`|
