@@ -45,7 +45,7 @@ The commands in the script are:
 |`radtest...$seq`|The full command to be run, including the variable|
 |`done`|Script end|
 
-There are 3 NGINX and 3 Traefik scripts, each script wil run against a different Virtual IP (vip) on the respective Load Balancer.
+There are 3 NGINX and 3 Traefik scripts, each script will run against a different Virtual IP (vip) on the respective Load Balancer.
 
 ## License
 
