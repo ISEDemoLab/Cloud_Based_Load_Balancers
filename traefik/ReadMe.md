@@ -100,6 +100,8 @@ INFO[0000] Configuration loaded from file: /home/ubuntu/traefik/traefik.yaml
 
 ## Configure Traefik as a System Service
 
+Following this section will require you to move your configuration files and logs to `/etc/traefik`.  Be sure to update the `traefik.yaml` static configuration file with the new locations.
+
 Make `traefik` executable and move to `/usr/local/bin`
 ``` from ~/traefik
 sudo chmod +x traefik
