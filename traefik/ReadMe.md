@@ -98,6 +98,76 @@ You should receive an `INFO` message as shown below
 INFO[0000] Configuration loaded from file: /home/ubuntu/traefik/traefik.yaml
 ```
 
+## Configure Traefik as a System Service
+
+Make `traefik` executable and move to `/usr/local/bin`
+``` from ~/traefik
+sudo chmod +x traefik
+sudo cp traefik /usr/local/bin
+sudo chown root:root /usr/local/bin/traefik
+sudo chmod 755 /usr/local/bin/traefik
+```
+
+Give the traefik binary the ability to bind to privileged ports (80, 443) as non-root
+```
+sudo setcap 'cap_net_bind_service=+ep' /usr/local/bin/traefik
+```
+
+Setup traefik user and group and permissions
+```
+sudo groupadd -g 321 traefik
+sudo useradd -g traefik --no-user-group --home-dir /var/www --no-create-home --shell /usr/sbin/nologin --system --uid 321 traefik
+sudo usermod traefik -aG traefik
+```
+
+Make a globally accessible folder path
+```
+sudo mkdir /etc/traefik
+sudo mkdir /etc/traefik/config
+sudo mkdir /etc/traefik/logs
+sudo mkdir /etc/traefik/acme
+sudo chown -R root:root /etc/traefik
+sudo chown -R traefik:traefik /etc/traefik/config /etc/traefik/logs
+```
+
+### Setup Service
+Create the file `/etc/systemd/system/traefik.service` with the following content
+```/etc/systemd/system/traefik.service
+[Unit]
+Description=Traefik
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User=traefik
+Group=traefik
+Restart=always
+Type=simple
+ExecStart=/usr/local/bin/traefik \
+    --config.file=/etc/traefik/traefik.yaml\
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Then run the following commands
+```
+sudo chown root:root /etc/systemd/system/traefik.service
+sudo chmod 644 /etc/systemd/system/traefik.service
+sudo systemctl daemon-reload
+sudo systemctl start traefik.service
+```
+
+To enable autoboot use this command
+```
+sudo systemctl enable traefik.service
+```
+
+To restart the traefik service
+```
+sudo systemctl restart traefik.service
+```
+
 
 ## Configure Traefik for Prometheus
 
