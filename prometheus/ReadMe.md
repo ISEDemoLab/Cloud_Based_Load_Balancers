@@ -3,7 +3,7 @@
 ## Install Prometheus
 These instrudtions are for installation on Debian-based linux (I'm using Ubuntu 22.04)
 
-### Prepare yout Linux host
+### Prepare your Linux host
 Start off by updating the package lists as follows:
 ```
 sudo apt update
@@ -95,7 +95,7 @@ To  create a prometheus group execute the command:
 sudo groupadd --system prometheus
 ```
 
-Thereafter, Create prometheus user and assign it to the just-created prometheus group.
+Thereafter, create the prometheus user and assign it to the just-created prometheus group.
 ```
 sudo useradd -s /sbin/nologin --system -g prometheus prometheus
 ```
